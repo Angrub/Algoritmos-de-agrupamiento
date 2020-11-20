@@ -1,17 +1,6 @@
-from vector import Vector
+from generar_datos import generar_data
 from cluster import Cluster
 from dendograma import Dendograma
-from random import randint, choice
-
-
-def generar_data(puntos, rango):
-    datos = []
-    for _ in range(puntos):
-        x = randint(0, rango) * choice([1, -1])
-        y = randint(0, rango) * choice([1, -1])
-        datos.append(Vector(x,y))
-
-    return datos
 
 def generar_clusters(puntos, rango):
     lista_de_vectores = generar_data(puntos,rango)

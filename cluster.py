@@ -4,11 +4,12 @@ class Cluster(Vector):
     
     def __init__(self, vectores=[]):
         super().__init__(0,0)
-        self.grupo = vectores
+        self.grupo = vectores[::]
         self.n_vectores = 0
     
     def agregar_vector(self, vector):
         self.grupo.append(vector)
+        
         self.calcular_centro()
 
     def sumar_cluster(self, cluster):
