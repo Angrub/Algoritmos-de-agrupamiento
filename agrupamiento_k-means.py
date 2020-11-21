@@ -44,19 +44,52 @@ def agrupar(clusters, metricas, vectores):
                 clusters[k].agregar_vector(vectores[i])
         #print(clusters[0].mostrar_cluster(), clusters[1].mostrar_cluster(), clusters[2].mostrar_cluster()) 
 
+def comparar_clusters(clusters_a, clusters_b):
+    len_cluster = len(clusters_a)
+    for i in range(len_cluster):
+        grupo_a = clusters_a[i].mostrar_cluster()
+        grupo_b = clusters_b[i].mostrar_cluster()
+        #print(grupo_b, grupo_a)
+        if grupo_a != grupo_b:
+            return True
+    return False
+
+def copiar_clusters(lista_de_clusters):
+    copia = []
+    for cluster in lista_de_clusters:
+        copia.append(cluster.copiar())
+    
+    return copia
+
+def vaciar_clusters(clusters):
+    for cluster in clusters:
+        cluster.vaciar()
+    
+
 def agrupamiento_kmeans(puntos, rango, numero_de_clusters):
     clusters = generar_clusters(numero_de_clusters, rango)
     vectores = generar_data(puntos, rango)
     metricas = generar_metricas(clusters, vectores)
+    copia = copiar_clusters(clusters)
     agrupar(clusters, metricas, vectores)
-
-    print(clusters[0].mostrar_cluster(), clusters[1].mostrar_cluster(), clusters[2].mostrar_cluster()) 
-    print(metricas)
+    
+    contador = 0
+    while comparar_clusters(copia, clusters): 
+        metricas = generar_metricas(clusters, vectores)
+        copia = copiar_clusters(clusters)
+        vaciar_clusters(clusters)
+        agrupar(clusters, metricas, vectores)
+        contador += 1
+        
+    print(clusters[0].mostrar_cluster(), clusters[1].mostrar_cluster(), clusters[2].mostrar_cluster())
+    print(contador)
+    #print(comparar_clusters(copia, clusters))
+    #print(metricas)
     
             
 
 if __name__ == '__main__':
-    puntos = 15
-    rango = 20
+    puntos = 30
+    rango = 2000
 
     agrupamiento_kmeans(puntos, rango, 3)

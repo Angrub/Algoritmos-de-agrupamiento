@@ -9,7 +9,6 @@ class Cluster(Vector):
     
     def agregar_vector(self, vector):
         self.grupo.append(vector)
-        
         self.calcular_centro()
 
     def sumar_cluster(self, cluster):
@@ -32,9 +31,16 @@ class Cluster(Vector):
         self.x = round(coord_x / self.n_vectores,4)
         self.y = round(coord_y / self.n_vectores,4)
 
+    def copiar(self):
+        return Cluster(self.grupo)
+
+    def vaciar(self):
+        self.grupo.clear()
+
 if __name__ == '__main__':
     cluster = Cluster()
     cluster.agregar_vector(Vector(4,10))
     cluster.agregar_vector(Vector(-6,8))
     cluster.agregar_vector(Vector(9,0))
     print(f'x:{cluster.x} y {cluster.y}')
+    
